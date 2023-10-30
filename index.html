@@ -66,14 +66,15 @@
               onsubmit="return validate();"
             >
               <div class="formData">
-                <label>Prénom</label><br />
+                <label for="fname">Prénom</label><br />
                 <input
                   class="text-control"
                   type="text"
-                  id="first"
-                  name="first"
+                  id="fname"
+                  name="fname"
                   minlength="2"
-                /><br />
+                />
+                <span class="msgError"></span>
               </div>
               <div class="formData">
                 <label>Nom</label><br />
@@ -82,7 +83,7 @@
                   type="text"
                   id="last"
                   name="last"
-                /><br />
+                /><span class="msgError"></span>
               </div>
               <div class="formData">
                 <label>E-mail</label><br />
@@ -92,6 +93,7 @@
                   id="email"
                   name="email"
                 /><br />
+                <span class="msgError"></span>
               </div>
               <div class="formData">
                 <label>Date de naissance</label><br />
@@ -101,6 +103,7 @@
                   id="birthdate"
                   name="birthdate"
                 /><br />
+                <span class="msgError"></span>
               </div>
               <div class="formData">
                 <label
@@ -115,6 +118,7 @@
                   min="0"
                   max="99"
                 />
+                <span class="msgError"></span>
               </div>
               <p class="text-label">
                 A quel tournoi souhaitez-vous participer cette année ?
@@ -186,6 +190,7 @@
                   <span class="checkbox-icon"></span>
                   Portland</label
                 >
+                <span class="msgError"></span>
               </div>
 
               <div class="formData">
@@ -199,6 +204,7 @@
                   <span class="checkbox-icon"></span>
                   J'ai lu et accepté les conditions d'utilisation.
                 </label>
+                <span class="msgError"></span>
                 <br />
                 <input class="checkbox-input" type="checkbox" id="checkbox2" />
                 <label class="checkbox2-label" for="checkbox2">
@@ -210,7 +216,7 @@
               <input
                 class="btn-submit"
                 type="submit"
-                class="button"
+                id="send_submit"
                 value="C'est parti"
               />
             </form>

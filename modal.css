@@ -67,6 +67,8 @@ img {
   background-color: #ff0000;
   color: #ffffff;
   border-radius: 15px;
+  text-decoration: underline;
+  text-decoration-skip-ink: auto;
 }
 
 .header .icon {
@@ -81,6 +83,7 @@ img {
   .header a.icon {
     float: right;
     display: block;
+    color: red;
   }
 }
 
@@ -105,11 +108,11 @@ img {
 
 
 @media screen and (max-width: 540px) {
-  .topnav a {
+  .header a {
     display: none;
   }
 
-  .topnav a.icon {
+  .header a.icon {
     float: right;
     display: block;
     margin-top: -15px;
@@ -129,6 +132,7 @@ main {
 
 
 }
+
 
 .modal-btn {
   font-size: 145%;
