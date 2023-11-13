@@ -59,12 +59,7 @@
         <div class="content">
           <span class="close"></span>
           <div class="modal-body">
-            <form
-              name="reserve"
-              action="index.html"
-              method="get"
-              onsubmit="return validate();"
-            >
+            <form name="reserve" id="reserve" action="index.html" method="post">
               <div class="formData">
                 <label for="fname">Prénom</label><br />
                 <input
@@ -214,12 +209,18 @@
                 <br />
               </div>
               <input
-                class="btn-submit"
+                class="btn-submit modal-btn"
                 type="submit"
-                id="send_submit"
+                id="send_button"
                 value="C'est parti"
               />
             </form>
+            <p id="errorMsg"></p>
+            <!-- Message de remerciement -->
+            <div id="thankMsg" class="thankMsg hiddenModal">
+              <h1 class="message">Merci pour votre inscription</h1>
+              <button id="thankBtn" class="btn-submit">Fermer</button>
+            </div>
           </div>
         </div>
       </div>

@@ -230,6 +230,25 @@ input {
   height: 48px;
 }
 
+/* input style added */
+.formData input:focus {
+  outline: 0;
+}
+
+.formData.success input {
+  border-color: #279e7a;
+}
+
+.formData.error input {
+  border-color: #ff0000;
+}
+
+.formData .msgError {
+  color: #ff0000;
+  font-size: 1rem;
+  height: 13px;
+}
+
 .formData[data-error]::after {
   content: attr(data-error);
   font-size: 0.4em;
@@ -587,4 +606,38 @@ footer {
   to {
     opacity: 1;
   }
+}
+
+/* Nouveau breakpoint pur les "petits" écrans  */
+@media screen and (max-width:450px) {
+  .hero-headline {
+    font-size: 38px;
+    width: 85%;
+    text-align: left;
+  }
+
+  .hero-text {
+    width: 90%;
+    font-size: 0.8rem;
+    margin-top: 20px;
+  }
+
+}
+
+/* Modal Thanks */
+.message {
+  display: flex;
+  height: 650px;
+  text-align: center;
+  align-items: center;
+  font-size: 3rem;
+
+}
+
+.showModal {
+  display: block;
+}
+
+.hiddenModal {
+  display: none;
 }

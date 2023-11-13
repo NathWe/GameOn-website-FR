@@ -10,7 +10,20 @@ function editNav() {
 // DOM Elements
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
-const formData = document.querySelectorAll(".formData");
+const validation = document.forms["reserve"];
+
+const closeBtn = document.querySelectorAll(".close");
+
+let fname = document.getElementById("fname");
+let l_name = document.getElementById("last");
+let email = document.getElementById("email");
+let birthdate = document.getElementById("birthdate");
+let nberQuantity = document.getElementById("quantity");
+let BtnRadio = document.getElementsByName('location');
+let CheckCondition = document.getElementById('checkbox1');
+
+const thankMsg = document.getElementById('thankMsg');
+const thankBtn = document.getElementById('thankBtn');
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -21,7 +34,7 @@ function launchModal() {
 }
 
 //Evénement 'click' sur bouton fermeture
-const closeBtn = document.querySelectorAll(".close");
+
 closeBtn.forEach((btn) => {btn.addEventListener("click", closeModal)});
 function closeModal(){
   modalbg.style.display = "none";
@@ -47,7 +60,7 @@ const setSuccess = element => {
 
 
  //Contrôle entrée prénom
- let fname = document.getElementById("fname");
+
  fname.addEventListener("input", () => {
   const regexFname = /^[a-zA-Z]+(([- ])?[a-zA-Z])+$/;
   console.log(fname.value);
@@ -64,7 +77,7 @@ else if(!regexFname.test(fname.value)){
 }
 })
 //Contrôle entrée nom
-let l_name = document.getElementById("last");
+
 l_name.addEventListener("input", () => {
   const regexLast = /^[a-zA-Z]+(([- ])?[a-zA-Z])+$/;
   l_name.value = l_name.value.toUpperCase();
@@ -79,7 +92,7 @@ l_name.addEventListener("input", () => {
     return true;
 })
 //Contrôle entrée email
-let email = document.getElementById("email");
+
 function validEmail(email) {
   const regexEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return regexEmail.test(String(email).toLowerCase());
@@ -99,7 +112,7 @@ email.addEventListener("input", () => {
   }
   })
   //Contrôle entrée date de naissance
-  let birthdate = document.getElementById("birthdate");
+
   function validBirthday(birthdate) {
     const dateRegex = /([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/;
     return dateRegex.test(birthdate);
@@ -115,7 +128,7 @@ email.addEventListener("input", () => {
     }
     })
 //Contrôle nombre de participation
-let nberQuantity = document.getElementById("quantity");
+
 nberQuantity.addEventListener("change", () => {
   console.log(nberQuantity.value);
 if(nberQuantity.value == ''){
@@ -127,7 +140,7 @@ return true;
 }
 })
 //Contrôle ville saisie
-let BtnRadio = document.getElementsByName('location');
+
 let city = null;
 for (var i = 0; i < BtnRadio.length; i++) {
   BtnRadio[i].addEventListener('change', function() {
@@ -142,10 +155,64 @@ for (var i = 0; i < BtnRadio.length; i++) {
 })
 };
 //Conditions d'utilisation
-let CheckCondition = document.getElementById('checkbox1');
+
 function condition() {
   let condition = this.value;
   if (condition.checked) {
     return true;
   } 
 }
+
+// Validation du formulaire
+function isFormValid() {
+  if (!fname.value ||
+    !l_name.value ||
+    !email.value ||
+    !birthdate.value ||
+    !nberQuantity ||
+    !city ||
+    !condition
+    ) {
+      return false;
+  }
+  return true;
+}
+
+//vérification champs remplis
+validation.addEventListener('submit', function(e) {
+  console.log
+  //empêche la soumission par défaut
+    e.preventDefault(); 
+    if (!isFormValid()) {
+      errorSubmit.innerHTML = "Veuillez renseigner tous les champs";
+      errorSubmit.style.color = "red";
+      return false;
+    } else {
+      message()
+      return true;
+    }
+  })
+
+  //masque formulaire + message validation réussie
+  function message() {
+    //Masquer le formulaire d'origine
+    validation.className = 'hiddenModal';
+    //Afficher le message et le bouton de fermeture
+    thankMsg.className = 'showModal';
+  };
+  
+
+  thankBtn.addEventListener('click', function event() {
+    //Réactiver le formulaire d'origine
+    validation.className = 'showModal';
+    //Masquer le message
+    thankMsg.className = 'hiddenModal';
+    // forcer la fermuture de la modale
+    closeModal();
+    //Réinitialiser le formulaire
+    validation.reset();
+    
+    
+  });
+
+
