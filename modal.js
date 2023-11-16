@@ -11,228 +11,185 @@ function editNav() {
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
-const formSignup = document.getElementsByName("reserve");
-const formFirst = document.getElementById("first");
-const formLast = document.getElementById("last");
-const formMail = document.getElementById("email");
-const formDate = document.getElementById("birthdate");
-const formTimes = document.getElementById("quantity");
-const formCity = document.getElementsByName("location");
-const formCondition = document.getElementById("checkbox1");
-const formSubmit = document.getElementsByClassName("btn-submit");
-const formError = document.getElementsByClassName("error");
-const modalClose = document.querySelectorAll(".close");
-const modalCloseButton = document.getElementsByClassName("btn-close");
-const modalSbm = document.getElementsByClassName("modal-submitted");
-const modalBody = document.getElementsByClassName("modal-body");
+const modalClose = document.querySelectorAll(".cross");
+const fistForm = document.querySelector("#form")
+const modalregister = document.querySelector(".register");
+
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
-
-// close modal event
-modalClose[0].addEventListener("click", closeModal);
-modalCloseButton[0].addEventListener("click", closeModal);
+modalClose.forEach((btn) => btn.addEventListener("click", closeModal));
 
 // launch modal form
 function launchModal() {
   modalbg.style.display = "block";
-  modalBody[0].style.display = "";
 }
-
-// close modal form
+// close modal event
 function closeModal() {
   modalbg.style.display = "none";
-  modalSbm[0].style.display = "none";
 }
-// Ajout d'un gestionnaire d'événements à l'événement submit du formulaire
-formSignup[0].addEventListener("submit", function (event) {
-  event.preventDefault(); // Empêche l'envoi du formulaire par défaut
 
-  // Appelle la fonction validate pour effectuer toutes les vérifications
-  if (!validate()) {
-    // Si la validation échoue, n'exécute pas l'envoi du formulaire
-    return false;
-  }
+// close modal form and open validationForm
+function launchModalRegister() {
+  modalbg.style.display = "none";
+  modalregister.style.display = "block";
+}
+// Fonction pour afficher le message de remerciement
+function showMessage() {
+  // Masquer le formulaire principal
+  form.style.display = 'none';
+  // Afficher le message de remerciement
+  const confirmationMessage = document.querySelector('.confirmation-message');
+  confirmationMessage.style.display = 'block';
+  // Afficher le bouton "Fermer" et la croix
+  const formfermer = document.getElementById('formfermer');
+  formfermer.style.display = 'block';
+}
 
-  // Si la validation réussit, continue avec l'envoi du formulaire
-  this.submit();
+const form = document.querySelector('#form');
+const prenom = document.querySelector('#prenom');
+const nom = document.querySelector('#nom');
+const email = document.querySelector('#email');
+const birthdate = document.querySelector('#birthdate');
+const quantity = document.querySelector('#quantity');
+const conditionU = document.querySelector('#conditionU');
+const locations = document.querySelector("#locations");
+//Regex
+const regexNomPrenom = /^[a-zA-ZàèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ]{2,}$/;
+const regexEmail = /\S+@\S+\.\S+/;
+const regexQuantity = /^[1-9]?[0-9]{1,1}$/;
+// Messages d'erreurs
+const ErreurPrenom = "Le champ Prénom a un minimum de 2 caractères";
+const ErreurNom = "Veuillez entrer 2 caractères ou plus pour le champ du nom.";
+const ErreurEmail = "L'adresse électronique n'est pas valide.";
+const ErreurBirthdate = "Vous devez entrer votre date de naissance.";
+const ErreurQuantity ="Vous devez entrer votre nombre de participation.";
+const ErreurLocations ="Vous devez choisir une ville.";
+const ErreurConditionU = "Vous devez vérifier que vous acceptez les termes et conditions.";
+
+// Écouteur sur le bouton "C'est parti"
+document.querySelector('.btn-submit').addEventListener('click', function() {
+  // Vérification des champs et affichage du message de remerciement si tout est valide
+  validateInputs();
 });
-// validation
-function validate() {
-  console.log("Validating..."); 
-  //run all change function to make sure
-  changeFormFirst();
-  changeFormLast();
-  changeFormMail();
-  changeFormTimes();
-  changeFormCity();
-  changeFormCondition();
+// Écouteur sur le bouton "Fermer"
+document.querySelector('.fermer').addEventListener('click', function() {
+  closeForm();
+});
+// Écouteur sur le bouton "Je m'inscris"
+document.querySelector('.inscrire').addEventListener('click', function() {
+  // Réinitialise le formulaire principal
+  cleanModal();
 
-  //confirm if everything is valide, if it is, opens the thanking modal
-  if (
-    (FirstNIsValid &&
-      LastNIsValid &&
-      MailIsValid &&
-      DateIsValid &&
-      TimesIsValid &&
-      CityIsValid &&
-      ConditionIsValid) == false
-      ) {
-        console.log("Validation failed!");  // Ajout de cette ligne
-        return false;
-      } else {
-        console.log("Validation successful!");  // Ajout de cette ligne
-        modalBody[0].style.display = "none";
-        modalSbm[0].style.display = "flex";
-        formSignup[0].reset();
-        return false;
-      }
-    }
+  // Réouvre la fenêtre modale principale
+  modalbg.style.display = 'block';
+});
 
-// validation on change, so it mark the error directly
-formFirst.addEventListener("change", changeFormFirst);
-function changeFormFirst() {
-  console.log("Change Form First");
-  var name = /^[A-Z]{1}[a-zA-Z'À-ÿ -]+$/;
-  if (!formFirst.value.match(name)) {
-    formFirst.style.border = "red 2px solid";
-    formError[0].innerHTML =
-      "Veuillez entrer 2 caractères ou plus pour le champ du prénom.";
-    FirstNIsValid = false;
-  } else {
-    formFirst.style.border = "none";
-    formError[0].innerHTML = "";
-    FirstNIsValid = true;
-  }
-  validate();
+// écouteur btn submit lance la vérification des champs
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  validateInputs();
+}
+);
+
+// Fonction Messages d'erreurs 
+const setErreur = (element, message) => {
+  const inputControl = element.parentElement;
+  const erreurDisplay = inputControl.querySelector('.erreur');
+// Fonction messages d'erreurs 
+  erreurDisplay.innerText = message;
+  inputControl.classList.add('erreur');
+  inputControl.classList.remove('success');
+}
+// Fonction comportement valide 
+const setSuccess = element => {
+  const inputControl = element.parentElement;
+  const erreurDisplay = inputControl.querySelector('.erreur');
+  erreurDisplay.innerText = '';
+  inputControl.classList.add('success');
+  inputControl.classList.remove('erreur');
+};
+// combinaison des constantInput et des regex 
+const isValidPrenom = prenom =>{
+  return regexNomPrenom.test(String(prenom).toLowerCase());
+}
+const isValidNom = nom =>{
+  return regexNomPrenom.test(String(nom).toLowerCase());
+}
+const isValidEmail = email => {
+  return regexEmail.test(String(email).toLowerCase());
 }
 
-formLast.addEventListener("change", changeFormLast);
-function changeFormLast() {
-  console.log("Change Form Last");
-  var name = /^[A-Z]{1}[a-zA-Z'À-ÿ -]+$/;
-  if (!formLast.value.match(name)) {
-    formLast.style.border = "red 2px solid";
-    formError[1].innerHTML =
-      "Veuillez entrer 2 caractères ou plus pour le champ du nom.";
-    LastNIsValid = false;
-  } else {
-    formLast.style.border = "none";
-    formError[1].innerHTML = "";
-    LastNIsValid = true;
-  }
+const isValidQuantity = quantity => {
+  return regexQuantity.test(String(quantity).toLowerCase());
 }
 
-formMail.addEventListener("change", changeFormMail);
-function changeFormMail() {
-  console.log("Change Form Mail");
-  var mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  if (formMail.value.match(mailFormat)) {
-    formMail.style.border = "none";
-    formError[2].innerHTML = "";
-    MailIsValid = true;
-  } else {
-    formMail.style.border = "red 2px solid";
-    formError[2].innerHTML = "Cette adresse mail est incorrecte.";
-    MailIsValid = false;
+// Fonction de vérification des Inputs 
+const validateInputs = () => {
+  const prenomValue = prenom.value.trim();
+  const nomValue = nom.value.trim();
+  const emailValue = email.value.trim();
+  const birthdateValue = birthdate.value.trim();
+  const conditionUValue = conditionU.checked;
+  const quantityValue = quantity.value.trim();
+  if(!isValidPrenom (prenomValue)){
+    setErreur(prenom, ErreurPrenom)
+  }else{
+    setSuccess(prenom);
   }
-  validate();
+  if(!isValidNom(nomValue)){
+    setErreur(nom, ErreurNom)
+  }else{
+    setSuccess(nom);
+  }
+  if(!isValidEmail(emailValue)){
+    setErreur(email, ErreurEmail)
+  }else{
+    setSuccess(email);
+  }
+  if (!birthdateValue){
+    setErreur(birthdate, ErreurBirthdate)
+  }else{
+    setSuccess(birthdate);
+  }
+  if (!isValidQuantity(quantityValue)){
+    setErreur(quantity, ErreurQuantity)
+  }else{
+    setSuccess(quantity);
+  }
+  if (conditionUValue == false){
+    setErreur(conditionU, ErreurConditionU)
+  }else{
+    setSuccess(conditionU); 
+  }
+  // vérifie si au moins 1 boutton radio est séléctioné.
+  if (document.querySelectorAll('[name="location"]:checked').length < 1) {
+  setErreur(locations, ErreurLocations)
+  }else{
+    setSuccess(locations);  
+  } 
+  // vérifie si 7 de mes class success sont actives.
+  if (document.querySelectorAll('.success').length >= 7) {
+    // Ferme la modal, affiche le message de remerciement et réinitialise le formulaire
+
+    showMessage();
+
+  }
+};
+
+function cleanModal() {
+  form.reset();
 }
 
-formDate.addEventListener("change", changeFormDate);
+// Ajoutez une fonction pour fermer le formulaire
+function closeForm() {
+  const formfermer = document.getElementById('formfermer');
+  formfermer.style.display = 'none';
 
-function changeFormDate() {
-  console.log("Change Form Date");
-  DateValid();
+  closeModal();
+    // Réinitialise le formulaire principal
+    cleanModal();
 
-  function DateValid() {
-    let val = formDate.value;
-    let dateParts = val.split("/");
-    
-    // Assurez-vous que nous avons trois parties (jour, mois, année)
-    if (dateParts.length !== 3) {
-      DateIsValid = false;
-    } else {
-      let day = parseInt(dateParts[0]);
-      let month = parseInt(dateParts[1]);
-      let year = parseInt(dateParts[2]);
-
-      // Vérifiez si ce sont des nombres valides
-      if (isNaN(day) || isNaN(month) || isNaN(year)) {
-        DateIsValid = false;
-      } else {
-        // Vérifiez si la date est valide
-        let maxDay = new Date(year, month, 0).getDate();
-        DateIsValid = day > 0 && day <= maxDay && month > 0 && month <= 12 && year > 0;
-
-        // Affichez le message d'erreur si la date n'est pas valide
-        if (!DateIsValid) {
-          formDate.style.border = "red 2px solid";
-          formError[3].innerHTML = "Vous devez entrer une date de naissance valide au format JJ/MM/AAAA.";
-        } else {
-          formDate.style.border = "none";
-          formError[3].innerHTML = "";
-        }
-      }
-    }
-  }
-  validate();
 }
 
   
-
-
-formTimes.addEventListener("change", changeFormTimes);
-function changeFormTimes() {
-  console.log("Change Form Times");
-  TimesValid();
-  function TimesValid() {
-    let val = formTimes.value;
-    let valNumber = parseInt(val);
-    if (isNaN(valNumber)) {
-      TimesIsValid = false;
-      formTimes.style.border = "red 2px solid";
-      formError[4].innerHTML = "Veuillez entrer un chiffre.";
-    } else {
-      if (valNumber < 0) {
-        TimesIsValid = false;
-        formTimes.style.border = "red 2px solid";
-        formError[4].innerHTML = "Chiffre ne peut pas être inférieur à 0.";
-      } else TimesIsValid = true;
-      formTimes.style.border = "none";
-      formError[4].innerHTML = "";
-    }
-  }
-}
-
-function changeFormCity() {
-  console.log("Change Form City");
-  var formCitySelected = false;
-  for (let i = 0; i < formCity.length; i++) {
-    if (formCity[i].checked == true) formCitySelected = true;
-  }
-  if (formCitySelected == false) {
-    formError[5].innerHTML = "Vous devez choisir une option.";
-    CityIsValid = false;
-  }
-  if (formCitySelected == true) {
-    formError[5].innerHTML = "";
-    CityIsValid = true;
-  }
-  validate();
-}
-
-formCondition.addEventListener("change", changeFormCondition);
-function changeFormCondition() {
-  console.log("Change Form Condition");
-  if (formCondition.checked == false) {
-    formError[6].innerHTML =
-      "Vous devez vérifier que vous acceptez les termes et conditions.";
-    ConditionIsValid = false;
-  }
-  if (formCondition.checked == true) {
-    formError[6].innerHTML = "";
-    ConditionIsValid = true;
-  }
-  validate();
-}
