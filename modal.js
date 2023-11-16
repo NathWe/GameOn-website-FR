@@ -67,31 +67,6 @@ const ErreurQuantity ="Vous devez entrer votre nombre de participation.";
 const ErreurLocations ="Vous devez choisir une ville.";
 const ErreurConditionU = "Vous devez vérifier que vous acceptez les termes et conditions.";
 
-// Écouteur sur le bouton "C'est parti"
-document.querySelector('.btn-submit').addEventListener('click', function() {
-  // Vérification des champs et affichage du message de remerciement si tout est valide
-  validateInputs();
-});
-// Écouteur sur le bouton "Fermer"
-document.querySelector('.fermer').addEventListener('click', function() {
-  closeForm();
-});
-// Écouteur sur le bouton "Je m'inscris"
-document.querySelector('.inscrire').addEventListener('click', function() {
-  // Réinitialise le formulaire principal
-  cleanModal();
-
-  // Réouvre la fenêtre modale principale
-  modalbg.style.display = 'block';
-});
-
-// écouteur btn submit lance la vérification des champs
-form.addEventListener('submit', e => {
-  e.preventDefault();
-  validateInputs();
-}
-);
-
 // Fonction Messages d'erreurs 
 const setErreur = (element, message) => {
   const inputControl = element.parentElement;
@@ -168,6 +143,23 @@ const validateInputs = () => {
   }else{
     setSuccess(locations);  
   } 
+
+  // Écouteur sur le bouton "C'est parti"
+document.querySelector('.btn-submit').addEventListener('click', function() {
+  // Vérification des champs et affichage du message de remerciement si tout est valide
+  validateInputs();
+});
+// Écouteur sur le bouton "Fermer"
+document.querySelector('.fermer').addEventListener('click', function() {
+  closeForm();
+});
+
+// écouteur btn submit lance la vérification des champs
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  validateInputs();
+}
+);
   // vérifie si 7 de mes class success sont actives.
   if (document.querySelectorAll('.success').length >= 7) {
     // Ferme la modal, affiche le message de remerciement et réinitialise le formulaire
@@ -178,9 +170,29 @@ const validateInputs = () => {
 };
 
 function cleanModal() {
-  form.reset();
-}
+  // Masquer le message de confirmation
+  const confirmationMessage = document.querySelector('.confirmation-message');
+  confirmationMessage.style.display = 'none';
 
+ // Réinitialiser le formulaire principal
+ form.reset();
+
+
+  // Réinitialiser le style des éléments de contrôle
+  const inputControls = document.querySelectorAll('.input-control');
+  inputControls.forEach(control => {
+    control.classList.remove('success', 'erreur');
+    const erreurDisplay = control.querySelector('.erreur');
+    erreurDisplay.innerText = '';
+  });
+
+  // Désélectionner toutes les options radio
+  const radioButtons = document.querySelectorAll('[type="radio"]');
+  radioButtons.forEach(radio => (radio.checked = false));
+
+    // Recharger la page
+    window.location.reload();
+}
 // Ajoutez une fonction pour fermer le formulaire
 function closeForm() {
   const formfermer = document.getElementById('formfermer');
