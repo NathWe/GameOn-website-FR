@@ -16,11 +16,8 @@ body {
   margin: 0;
   display: flex;
   flex-direction: column;
-  background-image: url("background.png");
   font-family: var(--font-default);
   font-size: 18px;
-  max-width: 1300px;
-  margin: 0 auto;
 }
 
 p {
@@ -28,11 +25,7 @@ p {
   padding: 0.5vw;
 }
 
-img {
-  padding-right: 1rem;
-}
-
-.header {
+.topnav {
   overflow: hidden;
   margin: 3.5%;
 }
@@ -41,11 +34,11 @@ img {
   float: left;
 }
 
-.navbar {
+.main-navbar {
   float: right;
 }
 
-.header a {
+.topnav a {
   float: left;
   display: block;
   color: #000000;
@@ -57,65 +50,48 @@ img {
   font-family: Roboto, sans-serif;
 }
 
-.header a:hover {
+.topnav a:hover {
   background-color: #ff0000;
   color: #ffffff;
   border-radius: 15px;
 }
 
-.header a.active {
+.topnav a.active {
   background-color: #ff0000;
   color: #ffffff;
   border-radius: 15px;
-  text-decoration: underline;
-  text-decoration-skip-ink: auto;
 }
 
-.header .icon {
+.topnav .icon {
   display: none;
 }
 
-@media screen and (max-width: 768px) {
-  .header a {
+@media screen and (max-width: 950px) {
+  .topnav a {
     display: none;
   }
 
-  .header a.icon {
+  .topnav a.icon {
     float: right;
     display: block;
-    color: red;
-  }
-}
+    margin-top: 0px;
 
-@media screen and (max-width: 768px) {
-  .header.responsive {
+  }
+
+  .topnav.responsive {
     position: relative;
   }
 
-  .header.responsive .icon {
+  .topnav.responsive .icon {
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 5%;
+    top: 5%;
   }
 
-  .header.responsive a {
+  .topnav.responsive a {
     float: none;
     display: block;
     text-align: left;
-  }
-}
-
-
-
-@media screen and (max-width: 540px) {
-  .header a {
-    display: none;
-  }
-
-  .header a.icon {
-    float: right;
-    display: block;
-    margin-top: -15px;
   }
 }
 
@@ -129,10 +105,7 @@ main {
   margin: 1px 20px 15px;
   border-radius: 2rem;
   text-align: justify;
-
-
 }
-
 
 .modal-btn {
   font-size: 145%;
@@ -230,25 +203,6 @@ input {
   height: 48px;
 }
 
-/* input style added */
-.formData input:focus {
-  outline: 0;
-}
-
-.formData.success input {
-  border-color: #279e7a;
-}
-
-.formData.error input {
-  border-color: #ff0000;
-}
-
-.formData .msgError {
-  color: #ff0000;
-  font-size: 1rem;
-  height: 13px;
-}
-
 .formData[data-error]::after {
   content: attr(data-error);
   font-size: 0.4em;
@@ -270,12 +224,13 @@ input {
   border: 2px solid #e54858;
 }
 
-/* 
-input[data-error]::after {
-    content: attr(data-error);
-    font-size: 0.4em;
-    color: red;
-} */
+.error {
+  display: block;
+  font-size: 14px;
+  color: red;
+  padding-top: 4px;
+}
+
 .checkbox-label,
 .checkbox2-label {
   position: relative;
@@ -356,6 +311,7 @@ input[data-error]::after {
   height: 32px;
   opacity: 1;
   cursor: pointer;
+  z-index: 1;
   transform: scale(0.7);
 }
 
@@ -404,6 +360,45 @@ input[data-error]::after {
 
 .select-selected {
   background-color: #fff;
+}
+
+/* Modal de confirmation */
+
+.modal-submitted {
+  display: none;
+  margin: 5% auto;
+  width: 100%;
+  max-width: 500px;
+  animation-name: modalopen;
+  animation-duration: var(--modal-duration);
+  background: #232323;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  color: #fff;
+  height: 738px;
+  padding: 50% 8% 15px;
+  font-size: 30px;
+  font-weight: normal;
+  text-align: center;
+  margin: 15px auto;
+  flex-direction: column;
+  align-content: center;
+  justify-content: space-between;
+  align-items: center;
+  justify-items: center;
+}
+
+.btn-close {
+  background: #fe142f;
+  display: block;
+  margin: 0 auto;
+  border-radius: 7px;
+  font-size: 1rem;
+  padding: 12px 82px;
+  color: #fff;
+  cursor: pointer;
+  border: 0;
 }
 
 /* Style the arrow inside the select element: */
@@ -465,7 +460,7 @@ input[data-error]::after {
 }
 
 .hero-section {
-  min-height: 93vh;
+  min-height: 90vh;
   border-radius: 10px;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -476,12 +471,13 @@ input[data-error]::after {
 
 .hero-content {
   padding: 51px 67px;
-  grid-column: span 4;
+  grid-column: 1/5;
   background: #232323;
   color: #fff;
   position: relative;
   text-align: left;
   min-width: 424px;
+  height: 90vh;
 }
 
 .hero-content::after {
@@ -522,7 +518,8 @@ input[data-error]::after {
 }
 
 .hero-img {
-  grid-column: span 8;
+  grid-column: 5/13;
+  height: 90vh;
 }
 
 .hero-img img {
@@ -530,6 +527,8 @@ input[data-error]::after {
   height: 100%;
   display: block;
   padding: 0;
+  overflow: hidden;
+  object-fit: cover;
 }
 
 .copyrights {
@@ -550,7 +549,7 @@ footer {
   margin: 0 20px;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 950px) {
   .hero-section {
     display: block;
     box-shadow: unset;
@@ -608,36 +607,108 @@ footer {
   }
 }
 
-/* Nouveau breakpoint pur les "petits" écrans  */
-@media screen and (max-width:450px) {
+/* mobile view modal*/
+
+@media screen and (max-width: 950px) {
+  .hero-section {
+    height: auto;
+    min-height: auto;
+  }
+
+  .hero-img {
+    height: auto;
+  }
+
+  .hero-content {
+    min-width: auto;
+    top: 80px;
+    height: auto;
+    padding: 0px;
+    display: block;
+  }
+
   .hero-headline {
-    font-size: 38px;
-    width: 85%;
-    text-align: left;
+    font-size: 3.5rem;
   }
 
   .hero-text {
-    width: 90%;
-    font-size: 0.8rem;
-    margin-top: 20px;
+    overflow: visible;
+    z-index: 1;
   }
 
+  .hero-img img {
+    border-radius: 30px;
+    margin-top: 100px;
+  }
+
+  .content {
+    z-index: 2;
+    max-width: none;
+    display: block;
+    position: relative;
+    bottom: 0;
+    padding-top: 50px;
+    margin-bottom: 0%;
+  }
+
+  .modal-submitted {
+    height: calc(100vh - 95px);
+  }
+
+  .topnav {
+    z-index: 2;
+    position: fixed;
+    background-color: white;
+    width: 100%;
+    margin: 0px;
+    padding: 15px;
+    top: 0;
+  }
+
+  .topnav.responsive {
+    z-index: 2;
+    background-color: white;
+    width: 100%;
+    margin: 0px;
+    padding: 15px;
+    display: grid;
+    position: fixed;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto;
+    line-height: 24px;
+  }
+
+  .topnav.responsive .header-logo {
+    grid-area: 1/1/2/3;
+  }
+
+  .topnav.responsive .main-navbar {
+    grid-area: 2/1/3/3;
+  }
+
+  .main-navbar {
+    float: none;
+  }
+
+  .close {
+    display: block;
+    position: absolute;
+    float: right;
+    top: 70px;
+  }
 }
 
-/* Modal Thanks */
-.message {
-  display: flex;
-  height: 650px;
-  text-align: center;
-  align-items: center;
-  font-size: 3rem;
+@media screen and (max-width: 350px) {
+  .topnav {
+    display: grid;
+    grid-template-columns: auto auto;
+  }
 
-}
+  .header-logo img {
+    width: 100%;
+  }
 
-.showModal {
-  display: block;
-}
-
-.hiddenModal {
-  display: none;
+  .topnav.responsive .header-logo img {
+    width: 80%;
+  }
 }
