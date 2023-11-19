@@ -55,7 +55,7 @@ const quantity = document.querySelector('#quantity');
 const conditionU = document.querySelector('#conditionU');
 const locations = document.querySelector("#locations");
 //Regex
-const regexNomPrenom = /^[a-zA-ZàèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ]{2,}$/;
+const regexNomPrenom = /^[a-zA-ZàèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ ]{2,}$/;
 const regexEmail = /\S+@\S+\.\S+/;
 const regexQuantity = /^[1-9]?[0-9]{1,1}$/;
 // Messages d'erreurs
@@ -63,7 +63,7 @@ const ErreurPrenom = "Le champ Prénom a un minimum de 2 caractères";
 const ErreurNom = "Veuillez entrer 2 caractères ou plus pour le champ du nom.";
 const ErreurEmail = "L'adresse électronique n'est pas valide.";
 const ErreurBirthdate = "Vous devez entrer votre date de naissance.";
-const ErreurQuantity ="Vous devez entrer votre nombre de participation.";
+const ErreurQuantity ="Vous devez entrer votre nombre de participation entre 0 et 99.";
 const ErreurLocations ="Vous devez choisir une ville.";
 const ErreurConditionU = "Vous devez vérifier que vous acceptez les termes et conditions.";
 
@@ -71,7 +71,7 @@ const ErreurConditionU = "Vous devez vérifier que vous acceptez les termes et c
 const setErreur = (element, message) => {
   const inputControl = element.parentElement;
   const erreurDisplay = inputControl.querySelector('.erreur');
-// Fonction messages d'erreurs 
+
   erreurDisplay.innerText = message;
   inputControl.classList.add('erreur');
   inputControl.classList.remove('success');
