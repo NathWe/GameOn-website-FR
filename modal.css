@@ -50,7 +50,7 @@ img {
   color: #000000;
   text-align: center;
   padding: 12px 12px;
-  margin: 5px;
+  margin: 0px;
   text-decoration: none;
   font-size: 20px;
   font-family: Roboto, sans-serif;
@@ -64,11 +64,16 @@ img {
 
 .topnav a.active {
   background-color: #ff0000;
+  text-decoration: underline;
   color: #ffffff;
   border-radius: 15px;
 }
 
 .topnav .icon {
+  display: none;
+}
+
+.hidden {
   display: none;
 }
 
@@ -80,6 +85,7 @@ img {
   .topnav a.icon {
     float: right;
     display: block;
+    color: #ff0000;
   }
 }
 
@@ -111,8 +117,6 @@ img {
   }
 }
 
-
-
 @media screen and (max-width: 540px) {
   .topnav a {
     display: none;
@@ -135,8 +139,6 @@ main {
   margin: 1px 20px 15px;
   border-radius: 2rem;
   max-height: 800px;
-
-
 }
 
 .modal-btn {
@@ -191,10 +193,11 @@ main {
   width: 100%;
   overflow: auto;
   background-color: rgba(26, 39, 156, 0.4);
+  margin-top: 0;
 }
 
 .content {
-  margin: 5% auto;
+  margin: 15% auto;
   width: 100%;
   max-width: 500px;
   animation-name: modalopen;
@@ -613,7 +616,7 @@ footer {
   }
 }
 
-/* launch modal event */
+/* Événement de lancement de la modalité */
 
 .formData.erreurcheck small {
   font-family: roboto;
@@ -633,7 +636,7 @@ footer {
   text-align: left !important;
 }
 
-/*erreur formulaire*/
+/*Erreur formulaire*/
 .formData.sucess input {
   border: none;
 }
