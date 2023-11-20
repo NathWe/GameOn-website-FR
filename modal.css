@@ -73,9 +73,6 @@ img {
   display: none;
 }
 
-.hidden {
-  display: none;
-}
 
 @media screen and (max-width: 768px) {
   .topnav a {
@@ -546,6 +543,10 @@ input[data-error]::after {
 }
 
 .hero-section>.btn-signup {
+  display: none;
+}
+
+.register.hidden {
   display: none;
 }
 

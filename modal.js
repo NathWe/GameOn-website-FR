@@ -41,6 +41,8 @@ document.querySelector(".modal-btn").addEventListener("click", launchModal);
 // Lancer l'évènement de fermeture
 document.querySelector(".cross").addEventListener("click", closeModal);
 
+
+
 //Fonctions
 
 // Lancer le formulaire modal
@@ -57,6 +59,7 @@ function closeModal() {
 function launchModalRegister() {
   modalbg.style.display = "none";
   modalregister.style.display = "block";
+  modalregister.classList.remove('hidden');
 }
 
 //Fonction pour ajuster la navigation en mode responsive
@@ -186,11 +189,6 @@ form.addEventListener('submit', e => {
     showMessage();
   }
 };
-
-// Sélectionnez le bouton Fermer
-const formFermerButton = document.getElementById('formfermer');
-// Ajoutez un gestionnaire d'événements pour le clic sur le bouton Fermer
-formFermerButton.addEventListener('click', closeForm);
 
 //Fonction de nettoyage
 
