@@ -260,8 +260,12 @@ input {
 }
 
 input.fermer {
-  margin-top: 23em;
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
 }
+
 
 .formData[data-error-visible="true"]::after {
   opacity: 1;
