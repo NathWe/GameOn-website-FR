@@ -37,9 +37,12 @@ const ErreurConditionU = "Vous devez vérifier que vous acceptez les termes et c
 // Évènements
 
 // Lancer l'évènement modal
-document.querySelector(".modal-btn").addEventListener("click", launchModal);
+// Lancer l'évènement modal
+modalBtn.forEach(btn => btn.addEventListener("click", launchModal));
+
 // Lancer l'évènement de fermeture
-document.querySelector(".cross").addEventListener("click", closeModal);
+// Lancer l'évènement modal
+modalClose.forEach(btn => btn.addEventListener("click", closeModal));
 
 
 
