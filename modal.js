@@ -31,17 +31,14 @@ const ErreurNom = "Veuillez entrer 2 caractères ou plus pour le champ du nom.";
 const ErreurEmail = "L'adresse électronique n'est pas valide.";
 const ErreurBirthdate = "Vous devez entrer votre date de naissance.";
 const ErreurQuantity ="Vous devez entrer votre nombre de participation entre 0 et 99.";
-const ErreurLocations ="Vous devez choisir une ville.";
+const ErreurLocations ="Vous devez choisir une option.";
 const ErreurConditionU = "Vous devez vérifier que vous acceptez les termes et conditions.";
 
 // Évènements
 
 // Lancer l'évènement modal
-// Lancer l'évènement modal
 modalBtn.forEach(btn => btn.addEventListener("click", launchModal));
-
 // Lancer l'évènement de fermeture
-// Lancer l'évènement modal
 modalClose.forEach(btn => btn.addEventListener("click", closeModal));
 
 
@@ -171,6 +168,13 @@ const validateInputs = () => {
     setSuccess(locations);  
   } 
 
+  // vérifie si 7 de mes class success sont actives.
+  if (document.querySelectorAll('.success').length >= 7) {
+    // Ferme la modal, affiche le message de remerciement et réinitialise le formulaire
+    showMessage();
+  }
+};
+
   //Écouteurs d'évènements
 
   // Écouteur sur le bouton "C'est parti"
@@ -186,12 +190,7 @@ form.addEventListener('submit', e => {
 }
 );
 
-  // vérifie si 7 de mes class success sont actives.
-  if (document.querySelectorAll('.success').length >= 7) {
-    // Ferme la modal, affiche le message de remerciement et réinitialise le formulaire
-    showMessage();
-  }
-};
+
 
 //Fonction de nettoyage
 
